@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Публічні Фінанси: Поняття та Функції | Ігор Прайс 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #2B59FF;
+            --lime: #DFFF00;
+            --purple: #A100FF;
+            --bg: #020202;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.12);
+        }
+
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: var(--bg); color: #fff; overflow-x: hidden; text-align: center; line-height: 1.5; }
+
+        /* Оптимізована фонова сітка */
+        .grid-3d {
+            position: fixed; width: 200vw; height: 200vh; top: -50%; left: -50%;
+            background-image: linear-gradient(var(--blue) 1px, transparent 1px), linear-gradient(90deg, var(--blue) 1px, transparent 1px);
+            background-size: 80px 80px; opacity: 0.06;
+            transform: rotateX(60deg); z-index: 0; pointer-events: none;
+        }
+
+        /* Економні зірки на CSS */
+        .stars-container { position: fixed; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .stars-container::after {
+            content: ""; position: absolute; top: -100%; left: 0; width: 100%; height: 200%;
+            background-image: radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
+                              radial-gradient(2px 2px at 40px 70px, var(--blue), rgba(0,0,0,0)),
+                              radial-gradient(2px 2px at 50px 160px, var(--lime), rgba(0,0,0,0));
+            background-size: 300px 300px;
+            animation: stars-move 10s linear infinite;
+        }
+        @keyframes stars-move { from { transform: translateY(0); } to { transform: translateY(300px); } }
+
+        /* Навігація в хедері */
+        nav {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(10, 10, 10, 0.85); border: 1px solid var(--border);
+            backdrop-filter: blur(15px); padding: 6px; border-radius: 100px;
+            z-index: 1000; display: flex; gap: 4px; width: auto; max-width: 95vw; overflow-x: auto;
+        }
+        nav::-webkit-scrollbar { display: none; }
+        nav a { 
+            color: #fff; text-decoration: none; font-size: clamp(9px, 2.5vw, 11px); font-weight: 800; 
+            text-transform: uppercase; padding: 10px 18px; border-radius: 100px;
+            transition: 0.3s; opacity: 0.5; white-space: nowrap;
+        }
+        nav a.active { background: var(--blue); opacity: 1; box-shadow: 0 0 15px rgba(43, 89, 255, 0.5); }
+
+        section { min-height: 100vh; padding: 120px 20px 80px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
+        .content-box { width: 100%; max-width: 1100px; margin: 0 auto; }
+
+        h1 { font-size: clamp(2.2rem, 8vw, 5rem); font-weight: 900; line-height: 1.05; text-transform: uppercase; margin-bottom: 30px; text-align: center; }
+        .accent-row {
+            background: linear-gradient(90deg, var(--lime), #8099ff, var(--lime));
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: flow 3s linear infinite;
+        }
+        @keyframes flow { to { background-position: 200% center; } }
+
+        .tagline { color: var(--lime); font-weight: 700; letter-spacing: 4px; display: block; margin-bottom: 10px; font-size: 12px; }
+        h2 { font-size: clamp(1.8rem, 6vw, 3.5rem); font-weight: 900; margin-bottom: 40px; text-transform: uppercase; color: var(--lime); }
+
+        .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 15px; }
+        .card {
+            grid-column: span 12; background: var(--glass); border: 1px solid var(--border);
+            padding: 30px; border-radius: 30px; backdrop-filter: blur(10px);
+            text-align: center; transition: 0.3s; position: relative; overflow: hidden;
+        }
+
+        /* Десктоп позиціонування */
+        @media (min-width: 1024px) {
+            h1, .tagline, .intro-p { text-align: left; }
+            .card { text-align: left; }
+            .span-8 { grid-column: span 8; }
+            .span-4 { grid-column: span 4; }
+            .span-6 { grid-column: span 6; }
+            .card:hover { border-color: var(--blue); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(43, 89, 255, 0.15); }
+        }
+
+        .badge {
+            display: inline-block; padding: 6px 14px; background: rgba(223, 255, 0, 0.1); border: 1px solid var(--lime);
+            color: var(--lime); border-radius: 100px; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 15px;
+        }
+
+        .start-btn {
+            display: inline-flex; background: var(--lime); color: #000; padding: 18px 40px;
+            border-radius: 100px; font-weight: 900; text-decoration: none;
+            text-transform: uppercase; margin-top: 20px; transition: 0.3s;
+        }
+        .start-btn:hover { background: #fff; transform: scale(1.05); }
+
+        /* Інтерактивні таби для функцій */
+        .tab-buttons { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; justify-content: center; }
+        .tab-btn {
+            background: var(--glass); border: 1px solid var(--border); color: #fff; padding: 12px 24px;
+            border-radius: 100px; font-weight: 800; cursor: pointer; transition: 0.3s; font-size: 12px; text-transform: uppercase;
+        }
+        .tab-btn.active { background: var(--lime); color: #000; border-color: var(--lime); box-shadow: 0 0 15px rgba(223, 255, 0, 0.4); }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        p { font-size: clamp(1rem, 2.5vw, 1.15rem); opacity: 0.85; margin-bottom: 10px; }
+        strong { color: var(--lime); }
+        .intro-p { font-size: clamp(1.2rem, 3vw, 1.4rem); border-top: 3px solid var(--blue); padding-top: 20px; max-width: 950px; margin-bottom: 20px; }
+        
+        @media (min-width: 1024px) { .intro-p { border-top: none; border-left: 4px solid var(--blue); padding-top: 0; padding-left: 25px; } }
+
+        footer { padding: 40px; opacity: 0.4; font-size: 11px; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+
+    <div class="grid-3d"></div>
+    <div class="stars-container"></div>
+
+    <nav>
+        <a href="#hero" class="nav-link active">Вступ</a>
+        <a href="#definition">Сутність</a>
+        <a href="#structure">Структура</a>
+        <a href="#functions">Інтерактив: Функції</a>
+        <a href="#conclusion">Кінець</a>
+    </nav>
+
+    <!-- СЕКЦІЯ 1: ВСТУП -->
+    <section id="hero">
+        <div class="content-box" data-aos="fade-up">
+            <span class="tagline">PUBLIC FINANCE SEMINAR 2026</span>
+            <h1>Публічні фінанси: <br><span class="accent-row">Поняття та функції</span></h1>
+            <div class="intro-p">
+                Сьогодні ми розглянемо <strong>публічні фінанси</strong> — фундаментальну систему грошових відносин, яка забезпечує дієздатність держави, соціальний захист громадян та економічну стабільність.
+            </div>
+            <p style="opacity: 0.7;">На відміну від приватного бізнесу, орієнтованого на прибуток, публічні фінанси функціонують виключно заради <strong>суспільних інтересів</strong>.</p>
+            <a href="#definition" class="start-btn">Розпочати огляд ↓</a>
+        </div>
+    </section>
+
+    <!-- СЕКЦІЯ 2: СУТНІСТЬ -->
+    <section id="definition">
+        <div class="content-box">
+            <h2 data-aos="fade-up">Що таке публічні фінанси?</h2>
+            <div class="bento">
+                <div class="card span-8" data-aos="fade-up">
+                    <span class="badge">Визначення</span>
+                    <p style="font-size: 1.2rem;"><strong>Публічні фінанси</strong> — це сукупність економічних відносин, що виникають у процесі формування, розподілу та використання грошових коштів органів державної влади та місцевого самоврядування.</p>
+                </div>
+                <div class="card span-4" data-aos="fade-up">
+                    <span class="badge">Мета</span>
+                    <p>Забезпечення функцій держави, надання суспільних благ та вирішення стратегічних завдань суспільства.</p>
+                </div>
+                <div class="card span-6" data-aos="fade-up" style="border-left: 4px solid var(--blue);">
+                    <p style="font-size: 1.1rem; font-weight: 800; color: #fff;">Імперативний характер</p>
+                    <p>Формування коштів суворо регламентовано Бюджетним та Податковим кодексами України.</p>
+                </div>
+                <div class="card span-6" data-aos="fade-up" style="border-left: 4px solid var(--lime);">
+                    <p style="font-size: 1.1rem; font-weight: 800; color: #fff;">Безповоротність</p>
+                    <p>Сплата податків не передбачає прямого еквівалентного повернення грошей конкретному платнику.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- СЕКЦІЯ 3: СТРУКТУРА -->
+    <section id="structure">
+        <div class="content-box">
+            <h2 data-aos="fade-up">Структура фінансової системи</h2>
+            <div class="bento">
+                <div class="card span-6" data-aos="fade-up">
+                    <p style="font-size: 1.4rem; font-weight: 900; color: var(--lime); margin-bottom: 10px;">Державний бюджет</p>
+                    <p>Централізований фонд грошових коштів держави для фінансування оборони, безпеки, державного управління та масштабних національних програм.</p>
+                </div>
+                <div class="card span-6" data-aos="fade-up">
+                    <p style="font-size: 1.4rem; font-weight: 900; color: var(--blue); margin-bottom: 10px;">Місцеві бюджети</p>
+                    <p>Децентралізовані ресурси органів місцевого самоврядування для розвитку громад, підтримки лікарень, шкіл та місцевої інфраструктури.</p>
+                </div>
+                <div class="card span-6" data-aos="fade-up">
+                    <p style="font-size: 1.4rem; font-weight: 900; color: var(--blue); margin-bottom: 10px;">Позабюджетні фонди</p>
+                    <p>Спеціалізовані цільові фонди (наприклад, фонди соціального страхування), акумульовані окремо від бюджету для виконання захисних функцій.</p>
+                </div>
+                <div class="card span-6" data-aos="fade-up">
+                    <p style="font-size: 1.4rem; font-weight: 900; color: var(--lime); margin-bottom: 10px;">Публічний сектор</p>
+                    <p>Фінанси державних та комунальних підприємств, орієнтовані на надання стратегічних послуг та життєзабезпечення суспільства.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- СЕКЦІЯ 4: ФУНКЦІЇ (ІНТЕРАКТИВНА) -->
+    <section id="functions">
+        <div class="content-box">
+            <h2 data-aos="fade-up">Ключові функції</h2>
+            
+            <div class="tab-buttons" data-aos="fade-up">
+                <button class="tab-btn active" onclick="openTab(event, 'tab1')">1. Перерозподільча</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab2')">2. Аллокаційна</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab3')">3. Стабілізаційна</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab4')">4. Контрольна</button>
+            </div>
+
+            <div id="tab1" class="tab-content active">
+                <div class="card" style="border-top: 4px solid var(--lime);">
+                    <span class="badge">Перерозподіл ресурсів</span>
+                    <p style="font-size: 1.3rem; font-weight: 800; margin-bottom: 15px;">Акумуляція податків та їх вирівнювання у суспільстві</p>
+                    <p>• <strong>Вертикальний перерозподіл:</strong> вилучення коштів у більш прибуткових бізнесів/громадян та підтримка соціально незахищених верств.</p>
+                    <p>• <strong>Горизонтальний перерозподіл:</strong> міжрегіональне вирівнювання через субвенції та дотації біднішим громадам.</p>
+                </div>
+            </div>
+
+            <div id="tab2" class="tab-content">
+                <div class="card" style="border-top: 4px solid var(--blue);">
+                    <span class="badge">Створення суспільних благ</span>
+                    <p style="font-size: 1.3rem; font-weight: 800; margin-bottom: 15px;">Забезпечення послугами, які ринок не створює самостійно</p>
+                    <p>Спрямування коштів на створення <strong>чистих суспільних благ</strong>: національна оборона, ліквідація надзвичайних ситуацій, фундаментальна наука, освітня та дорожня інфраструктура.</p>
+                </div>
+            </div>
+
+            <div id="tab3" class="tab-content">
+                <div class="card" style="border-top: 4px solid var(--purple);">
+                    <span class="badge">Макроекономічна стабільність</span>
+                    <p style="font-size: 1.3rem; font-weight: 800; margin-bottom: 15px;">Згладжування коливань економічного циклу</p>
+                    <p>Використання податково-бюджетних інструментів під час криз (для стимулювання попиту та бізнесу) або під час перегріву економіки (для приборкання інфляції).</p>
+                </div>
+            </div>
+
+            <div id="tab4" class="tab-content">
+                <div class="card" style="border-top: 4px solid var(--lime);">
+                    <span class="badge">Фінансовий нагляд</span>
+                    <p style="font-size: 1.3rem; font-weight: 800; margin-bottom: 15px;">Контроль за кожною гривнею з державного бюджету</p>
+                    <p>Системна перевірка повноти надходження податків та цільового використання бюджетних коштів спеціалізованими органами (Рахункова палата, Держаудитслужба).</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- СЕКЦІЯ 5: ВИСНОВОК -->
+    <section id="conclusion">
+        <div class="content-box">
+            <h2 data-aos="zoom-in">Підсумок</h2>
+            <div class="card" data-aos="fade-up">
+                <p style="font-size: 1.3rem; opacity: 1;">Публічні фінанси — це головний інструмент державного регулювання, який компенсує недоліки ринкового механізму, гарантує соціальну справедливість та забезпечує національну безпеку й сталий розвиток суспільства.</p>
+            </div>
+            <div style="margin-top: 40px; font-size: clamp(2rem, 8vw, 4rem); font-weight: 900; color: var(--lime);" data-aos="fade-up">ДЯКУЮ ЗА УВАГУ!</div>
+            <p style="margin-top: 15px; opacity: 0.6; font-weight: 700;">ІГОР ПРАЙС • 2026</p>
+        </div>
+    </section>
+
+    <footer>ДЕРЖАВНИЙ ПОДАТКОВИЙ УНІВЕРСИТЕТ</footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        // Інтерактивні таби
+        function openTab(evt, tabName) {
+            let i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Скрол-детектор для хедера
+        window.addEventListener("scroll", () => {
+            let current = "";
+            document.querySelectorAll("section").forEach(s => {
+                if (window.pageYOffset >= s.offsetTop - 300) current = s.getAttribute("id");
+            });
+            document.querySelectorAll("nav a").forEach(l => {
+                l.classList.remove("active");
+                if (l.getAttribute("href").includes(current)) l.classList.add("active");
+            });
+        });
+    </script>
+</body>
+</html>
